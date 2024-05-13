@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import removeIcon from "./remove.svg";
+import removeIcon from "./assets/remove.svg";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -22,7 +22,7 @@ function App() {
     }
   };
 
-  const handleResetInput = (index) => {
+  const handleResetInput = () => {
     setInputValue("");
   };
 
