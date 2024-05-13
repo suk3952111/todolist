@@ -10,7 +10,6 @@ function App() {
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    console.log(value);
   };
 
   const handleKeyDown = (e) => {
@@ -18,7 +17,6 @@ function App() {
       const value = e.target.value;
       setItems((prevItems) => [value, ...prevItems]);
       setInputValue("");
-      console.log(items);
     }
   };
 
@@ -29,7 +27,6 @@ function App() {
   const handleDelete = (index) => {
     const nextItems = items.filter((_, idx) => idx !== index);
     setItems(nextItems);
-    console.log(index);
   };
 
   const handleComplete = (todo, index) => {
