@@ -79,7 +79,7 @@ function App() {
             {items
               .filter((item) => item.isCompleted)
               .map((todo) => (
-                <li key={`key-${todo.id}`} className="list-item">
+                <li key={`key-${todo.id}`} className="list-item completed">
                   {todo.text}
                   <div>
                     <button onClick={() => handleToggleComplete(todo)}>
