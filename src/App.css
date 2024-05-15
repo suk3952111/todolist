@@ -10,8 +10,6 @@
   border: none;
   outline: none;
 }
-.resetInput {
-}
 
 .list {
   width: 100%;
@@ -22,4 +20,9 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #808080;
 }
