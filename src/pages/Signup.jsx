@@ -28,7 +28,6 @@ const Signup = () => {
       signupTime: new Date().toISOString(),
     };
     localStorage.setItem(data.email, JSON.stringify(userData));
-    console.log("유저 로그인:", userData);
     setSignupError("");
     navigate("/login");
   };
