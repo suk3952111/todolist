@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import "./Signup.css";
 import { useNavigate } from "react-router-dom";
+import useToggle from "../hooks/useToggle";
+import "./Signup.css";
 
 const Signup = () => {
   const {
@@ -10,7 +11,7 @@ const Signup = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, toggleShowPassword] = useToggle(false);
   const [signupError, setSignupError] = useState("");
   const navigate = useNavigate();
 
@@ -30,10 +31,6 @@ const Signup = () => {
     localStorage.setItem(data.email, JSON.stringify(userData));
     setSignupError("");
     navigate("/login");
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
