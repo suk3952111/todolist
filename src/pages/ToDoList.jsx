@@ -26,16 +26,18 @@ function ToDoList() {
     setInputValue("");
   };
 
-  const handleToggleComplete = (todo) => {
+  const handleToggleComplete = (selectedId) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === todo.id ? { ...item, isCompleted: !item.isCompleted } : item
+        item.id === selectedId
+          ? { ...item, isCompleted: !item.isCompleted }
+          : item
       )
     );
   };
 
-  const handleDelete = (todo) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== todo.id));
+  const handleDelete = (selectedId) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== selectedId));
   };
 
   return (
@@ -66,8 +68,10 @@ function ToDoList() {
             <li key={`key-${todo.id}`} className="list-item">
               {todo.text}
               <div>
-                <button onClick={() => handleToggleComplete(todo)}>완료</button>
-                <button onClick={() => handleDelete(todo)}>삭제</button>
+                <button onClick={() => handleToggleComplete(todo.id)}>
+                  완료
+                </button>
+                <button onClick={() => handleDelete(todo.id)}>삭제</button>
               </div>
             </li>
           ))}
@@ -82,7 +86,7 @@ function ToDoList() {
                 <li key={`key-${todo.id}`} className="list-item completed">
                   {todo.text}
                   <div>
-                    <button onClick={() => handleToggleComplete(todo)}>
+                    <button onClick={() => handleToggleComplete(todo.id)}>
                       취소
                     </button>
                   </div>
