@@ -96,7 +96,7 @@ const Home = () => {
         </label>
       </div>
       <div>
-        <h1>Product List</h1>
+        <h1>상품 리스트</h1>
         <ul>
           {filteredProducts.map((product) => (
             <li key={`key-${product.id}`}>
