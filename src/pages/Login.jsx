@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import useToggle from "../hooks/useToggle";
+import "./Login.css";
 
 const Login = ({ onLogin }) => {
   const {
@@ -10,7 +11,7 @@ const Login = ({ onLogin }) => {
     formState: { errors },
   } = useForm();
   const [loginError, setLoginError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, toggleShowPassword] = useToggle(false);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -27,10 +28,6 @@ const Login = ({ onLogin }) => {
     } else {
       setLoginError("사용자가 존재하지 않습니다.");
     }
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
   };
 
   return (

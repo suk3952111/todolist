@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import "./Signup.css";
 import { useNavigate } from "react-router-dom";
+import useToggle from "../hooks/useToggle";
+import "./Signup.css";
 
 const Signup = () => {
   const {
@@ -10,19 +11,13 @@ const Signup = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, toggleShowPassword] = useToggle(false);
   const [signupError, setSignupError] = useState("");
   const navigate = useNavigate();
 
   const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
 
   const onSubmit = (data) => {
-    if (password !== confirmPassword) {
-      setSignupError("비밀번호가 동일하지 않습니다.");
-      return;
-    }
-
     const userData = {
       ...data,
       signupTime: new Date().toISOString(),
@@ -30,10 +25,6 @@ const Signup = () => {
     localStorage.setItem(data.email, JSON.stringify(userData));
     setSignupError("");
     navigate("/login");
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
