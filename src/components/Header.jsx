@@ -1,12 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
+
+function getLinkStyle({ isActive }) {
+  return {
+    textDecoration: isActive ? "underline" : "none",
+  };
+}
 
 const Header = ({ user, handleLogout }) => {
   const navigate = useNavigate();
 
   const onLogout = () => {
     handleLogout();
-    navigate("/login"); // 로그인 페이지로 이동
+    navigate("/login");
   };
 
   return (
@@ -14,10 +20,19 @@ const Header = ({ user, handleLogout }) => {
       <nav className="navigator">
         <div className="navigator-components">
           <li>
-            <Link to="/">Home</Link>
+            <NavLink style={getLinkStyle} to="/">
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/todolist">TodoList</Link>
+            <NavLink style={getLinkStyle} to="/todolist">
+              TodoList
+            </NavLink>
+          </li>
+          <li>
+            <NavLink style={getLinkStyle} to="/products">
+              쇼핑몰
+            </NavLink>
           </li>
         </div>
         <div className="navigator-components">
@@ -31,10 +46,14 @@ const Header = ({ user, handleLogout }) => {
           ) : (
             <>
               <li>
-                <Link to="/login">로그인</Link>
+                <NavLink style={getLinkStyle} to="/login">
+                  로그인
+                </NavLink>
               </li>
               <li>
-                <Link to="/signup">회원가입</Link>
+                <NavLink style={getLinkStyle} to="/signup">
+                  회원가입
+                </NavLink>
               </li>
             </>
           )}
