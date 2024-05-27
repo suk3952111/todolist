@@ -1,9 +1,9 @@
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
-      <h1>홈페이지입니다!</h1>
+      <p>홈페이지 입니다!</p>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
