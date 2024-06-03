@@ -1,19 +1,36 @@
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa6";
-import { useAsync } from "../hooks/useAsync";
+import { useAsync } from "@/hooks/useAsync";
+import { fetchProducts, fetchCategories } from "@/api/api";
+import { sortProducts } from "@/hooks/util";
 import "./ProductsList.css";
 import { Link } from "react-router-dom";
 
-const fetchProducts = () => {
-  return fetch("https://fakestoreapi.com/products/").then((res) => res.json());
+const SORT_OPTIONS = {
+  PRICE_LOW_TO_HIGH: "price-lowtohigh",
+  PRICE_HIGH_TO_LOW: "price-hightolow",
+  RATING: "rating",
+  REVIEW: "review",
 };
 
 const ProductsList = () => {
-  const { data: products, loading, error } = useAsync(fetchProducts);
+  const {
+    data: products,
+    loading: productsLoading,
+    error: productsError,
+  } = useAsync(() => fetchProducts());
+
+  const {
+    data: allCategories = [],
+    loading: categoriesLoading,
+    error: categoriesError,
+  } = useAsync(() => fetchCategories());
+
   const [filters, setFilters] = useState({
     category: "all",
     sortOption: "price",
   });
+
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -26,34 +43,25 @@ const ProductsList = () => {
         );
       }
 
-      if (filters.sortOption === "price-lowtohigh") {
-        sortedProducts.sort((a, b) => a.price - b.price);
-      } else if (filters.sortOption === "price-hightolow") {
-        sortedProducts.sort((a, b) => b.price - a.price);
-      } else if (filters.sortOption === "rating") {
-        sortedProducts.sort((a, b) => b.rating.rate - a.rating.rate);
-      } else if (filters.sortOption === "review") {
-        sortedProducts.sort((a, b) => b.rating.count - a.rating.count);
-      }
+      sortedProducts = sortProducts(sortedProducts, filters.sortOption);
 
       setFilteredProducts(sortedProducts);
     }
   }, [products, filters]);
 
-  if (loading) {
+  if (productsLoading || categoriesLoading) {
     return <div>상품들을 불러오고 있습니다...</div>;
   }
 
-  if (error) {
-    return <div>에러: {error.message}</div>;
+  if (productsError) {
+    return <div>에러: {productsError.message}</div>;
   }
 
-  const categories = [
-    "all",
-    ...(products && products.length > 0
-      ? [...new Set(products.map((product) => product.category))]
-      : []),
-  ];
+  if (categoriesError) {
+    return <div>에러: {categoriesError.message}</div>;
+  }
+
+  const categories = ["all", ...(allCategories || [])];
   return (
     <div>
       <div>
@@ -89,10 +97,10 @@ const ProductsList = () => {
               }))
             }
           >
-            <option value="price-lowtohigh">가격 낮은순</option>
-            <option value="price-hightolow">가격 높은순</option>
-            <option value="rating">평점 높은순</option>
-            <option value="review">리뷰 많은순</option>
+            <option value={SORT_OPTIONS.PRICE_LOW_TO_HIGH}>가격 낮은순</option>
+            <option value={SORT_OPTIONS.PRICE_HIGH_TO_LOW}>가격 높은순</option>
+            <option value={SORT_OPTIONS.RATING}>평점 높은순</option>
+            <option value={SORT_OPTIONS.REVIEW}>리뷰 많은순</option>
           </select>
         </label>
       </div>

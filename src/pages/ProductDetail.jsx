@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useAsync } from "../hooks/useAsync";
+import { fetchProduct } from "@/api/api";
 import { FaStar } from "react-icons/fa6";
 
 const ProductDetail = () => {
   const { productSlug } = useParams();
-  const fetchProduct = () => {
-    return fetch(`https://fakestoreapi.com/products/${productSlug}`).then(
-      (res) => res.json()
-    );
-  };
-  const { data: productDetail, loading, error } = useAsync(fetchProduct);
+
+  const {
+    data: productDetail,
+    loading,
+    error,
+  } = useAsync(() => fetchProduct(productSlug));
 
   if (loading) {
     return <div>상품 상세내용을 불러오고 있습니다...</div>;
