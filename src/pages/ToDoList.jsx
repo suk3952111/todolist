@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./ToDoList.css";
+import styles from "./ToDoList.module.css";
 import removeIcon from "@/assets/remove.svg";
 
 function ToDoList() {
@@ -42,9 +42,9 @@ function ToDoList() {
 
   return (
     <div>
-      <div className="inputField">
+      <div className={styles.inputField}>
         <input
-          className="input"
+          className={styles.input}
           type="text"
           placeholder="추가하려는 일정을 입력하세요"
           onChange={handleChange}
@@ -54,18 +54,18 @@ function ToDoList() {
         {inputValue && (
           <img
             onClick={handleResetInput}
-            className="resetInput"
+            className={styles.resetInput}
             src={removeIcon}
             alt="removeIcon"
           />
         )}
       </div>
       <p>할 일</p>
-      <ul className="list">
+      <ul className={styles.list}>
         {items
           .filter((item) => !item.isCompleted)
           .map((todo) => (
-            <li key={`key-${todo.id}`} className="list-item">
+            <li key={`key-${todo.id}`} className={styles.listItem}>
               {todo.text}
               <div>
                 <button onClick={() => handleToggleComplete(todo.id)}>
@@ -79,11 +79,14 @@ function ToDoList() {
       {items.filter((item) => item.isCompleted).length > 0 && (
         <div>
           <p>완료</p>
-          <ul className="list">
+          <ul className={styles.list}>
             {items
               .filter((item) => item.isCompleted)
               .map((todo) => (
-                <li key={`key-${todo.id}`} className="list-item completed">
+                <li
+                  key={`key-${todo.id}`}
+                  className={`${styles.listItem} ${styles.completed}`}
+                >
                   {todo.text}
                   <div>
                     <button onClick={() => handleToggleComplete(todo.id)}>

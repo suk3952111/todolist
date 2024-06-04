@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa6";
 import { useAsync } from "@/hooks/useAsync";
 import { fetchProducts, fetchCategories } from "@/api/api";
 import { sortProducts } from "@/hooks/util";
-import "./ProductsList.css";
+import styles from "./ProductsList.module.css";
 import { Link } from "react-router-dom";
 
 const SORT_OPTIONS = {
@@ -119,7 +119,7 @@ const ProductsList = () => {
                 <img
                   src={product.image}
                   alt="상품 사진"
-                  className="product-image"
+                  className={styles.image}
                 />
                 <p>
                   <FaStar /> {product.rating.rate} (리뷰 수:

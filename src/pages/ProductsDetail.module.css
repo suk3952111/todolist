@@ -1,0 +1,27 @@
+.image {
+  width: 400px;
+  height: auto;
+}
+
+.body {
+  display: flex;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  width: 45vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartList {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
