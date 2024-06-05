@@ -5,12 +5,12 @@ import { FaStar, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import styles from "./ProductDetail.module.css";
 import Modal from "@/components/Modal";
 import useToggle from "@/hooks/useToggle";
-import useAuth from "../hooks/useAuth";
 import useCart from "../hooks/useCart";
+import { useAuthContext } from "../App";
 
 const ProductDetail = () => {
   const { productSlug } = useParams();
-  const { user, updateUser } = useAuth();
+  const { user, updateUser } = useAuthContext();
 
   const {
     data: productDetail,

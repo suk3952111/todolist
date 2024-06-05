@@ -1,5 +1,5 @@
-import CartItem from "../components/CartItem";
 import { useAuthContext } from "../App";
+import CartItem from "../components/CartItem";
 
 const Cart = () => {
   const { user, updateUser } = useAuthContext();
@@ -9,18 +9,13 @@ const Cart = () => {
   }
 
   const calculateTotalPrice = (cart) => {
-    return cart.reduce((total, item) => {
-      return total + item.price * item.number;
-    }, 0);
+    return cart.reduce((total, item) => total + item.price * item.number, 0);
   };
 
   const updateCart = (id, newQuantity) => {
-    const updatedCart = user.cart.map((item) => {
-      if (item.id === id) {
-        return { ...item, number: newQuantity };
-      }
-      return item;
-    });
+    const updatedCart = user.cart.map((item) =>
+      item.id === id ? { ...item, number: newQuantity } : item
+    );
     updateUser({ ...user, cart: updatedCart });
   };
 

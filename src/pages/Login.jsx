@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useToggle from "../hooks/useToggle";
 import "./Login.css";
+import { useAuthContext } from "../App";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
+  const { handleLogin } = useAuthContext();
   const {
     register,
     handleSubmit,
@@ -19,7 +21,7 @@ const Login = ({ onLogin }) => {
     if (storedUser) {
       const user = JSON.parse(storedUser);
       if (user.password === data.password) {
-        onLogin(user);
+        handleLogin(user);
         setLoginError("");
         navigate("/");
       } else {

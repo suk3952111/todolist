@@ -1,26 +1,21 @@
 import { useState, useEffect } from "react";
 
 const useCart = (productDetail, user, updateUser, toggleModal) => {
-  const [cartItem, setCartItem] = useState({
-    price: 0,
-    number: 0,
-  });
+  const [cartItem, setCartItem] = useState({ price: 0, number: 0 });
 
   useEffect(() => {
     if (productDetail) {
-      setCartItem({
-        price: productDetail.price,
-        number: 0,
-      });
+      setCartItem({ price: productDetail.price, number: 0 });
     }
   }, [productDetail]);
 
-  const updateCart = (cartItemToAdd, userData, updateUser) => {
+  const updateCart = (cartItemToAdd) => {
+    const userData = JSON.parse(localStorage.getItem("user")) || {};
     const cart = userData.cart || [];
-
     const existingItemIndex = cart.findIndex(
       (item) => item.id === cartItemToAdd.id
     );
+
     if (existingItemIndex !== -1) {
       cart[existingItemIndex].number = cartItemToAdd.number;
     } else {
@@ -29,6 +24,7 @@ const useCart = (productDetail, user, updateUser, toggleModal) => {
 
     userData.cart = cart;
     updateUser({ ...userData });
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const addCartItemNumber = () => {
@@ -46,23 +42,12 @@ const useCart = (productDetail, user, updateUser, toggleModal) => {
   };
 
   const handleAddToCart = () => {
-    const cartItemToAdd = {
-      ...productDetail,
-      number: cartItem.number,
-    };
-
-    const userData = JSON.parse(localStorage.getItem("user")) || {};
-    updateCart(cartItemToAdd, userData, updateUser);
+    const cartItemToAdd = { ...productDetail, number: cartItem.number };
+    updateCart(cartItemToAdd);
     toggleModal();
-    window.location.reload();
   };
 
-  return {
-    cartItem,
-    addCartItemNumber,
-    removeCartItemNumber,
-    handleAddToCart,
-  };
+  return { cartItem, addCartItemNumber, removeCartItemNumber, handleAddToCart };
 };
 
 export default useCart;
