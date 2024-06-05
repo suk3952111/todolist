@@ -1,6 +1,4 @@
-// hooks/useCart.js
 import { useState, useEffect } from "react";
-import { updateCart } from "./cart";
 
 const useCart = (productDetail, user, updateUser, toggleModal) => {
   const [cartItem, setCartItem] = useState({
@@ -16,6 +14,22 @@ const useCart = (productDetail, user, updateUser, toggleModal) => {
       });
     }
   }, [productDetail]);
+
+  const updateCart = (cartItemToAdd, userData, updateUser) => {
+    const cart = userData.cart || [];
+
+    const existingItemIndex = cart.findIndex(
+      (item) => item.id === cartItemToAdd.id
+    );
+    if (existingItemIndex !== -1) {
+      cart[existingItemIndex].number = cartItemToAdd.number;
+    } else {
+      cart.push(cartItemToAdd);
+    }
+
+    userData.cart = cart;
+    updateUser({ ...userData });
+  };
 
   const addCartItemNumber = () => {
     setCartItem((prevCartItem) => ({
