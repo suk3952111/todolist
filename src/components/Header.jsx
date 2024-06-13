@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useAuthContext } from "../App";
-import { useEffect } from "react";
 
 function getLinkStyle({ isActive }) {
   return {
@@ -17,8 +16,6 @@ const Header = () => {
     handleLogout();
     navigate("/login");
   };
-
-  useEffect(() => {}, [user]);
 
   return (
     <header>
@@ -45,9 +42,7 @@ const Header = () => {
             <>
               <NavLink style={getLinkStyle} to="/cart">
                 장바구니
-                {user.cart && user.cart.length > 0
-                  ? `(${user.cart.length})`
-                  : ""}
+                {user.cart?.length > 0 && `(${user.cart.length})`}
               </NavLink>
               <li>안녕하세요, {user.email}님</li>
               <li>

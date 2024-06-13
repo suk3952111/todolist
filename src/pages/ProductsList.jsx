@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa6";
 import { useAsync } from "@/hooks/useAsync";
 import { fetchProducts, fetchCategories } from "@/api/api";
-import { sortProducts } from "@/hooks/util";
+import { sortProducts } from "@/utils/util";
 import styles from "./ProductsList.module.css";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,9 @@ const SORT_OPTIONS = {
   RATING: "rating",
   REVIEW: "review",
 };
+
+const CATEGORY_ALL = "all";
+const SORT_OPTION_DEFAULT = "price";
 
 const ProductsList = () => {
   const {
@@ -27,8 +30,8 @@ const ProductsList = () => {
   } = useAsync(() => fetchCategories());
 
   const [filters, setFilters] = useState({
-    category: "all",
-    sortOption: "price",
+    category: CATEGORY_ALL,
+    sortOption: SORT_OPTION_DEFAULT,
   });
 
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -37,7 +40,7 @@ const ProductsList = () => {
     if (products) {
       let sortedProducts = [...products];
 
-      if (filters.category !== "all") {
+      if (filters.category !== CATEGORY_ALL) {
         sortedProducts = sortedProducts.filter(
           (product) => product.category === filters.category
         );
@@ -48,6 +51,14 @@ const ProductsList = () => {
       setFilteredProducts(sortedProducts);
     }
   }, [products, filters]);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
 
   if (productsLoading || categoriesLoading) {
     return <div>상품들을 불러오고 있습니다...</div>;
@@ -61,7 +72,8 @@ const ProductsList = () => {
     return <div>에러: {categoriesError.message}</div>;
   }
 
-  const categories = ["all", ...(allCategories || [])];
+  const categories = [CATEGORY_ALL, ...allCategories];
+  console.log(categories);
   return (
     <div>
       <div>
@@ -71,13 +83,9 @@ const ProductsList = () => {
         <label>
           카테고리 선택:
           <select
+            name="category"
             value={filters.category}
-            onChange={(e) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                category: e.target.value,
-              }))
-            }
+            onChange={handleFilterChange}
           >
             {categories.map((cat, index) => (
               <option key={index} value={cat}>
@@ -89,13 +97,9 @@ const ProductsList = () => {
         <label>
           정렬 기준:
           <select
+            name="sortOption"
             value={filters.sortOption}
-            onChange={(e) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                sortOption: e.target.value,
-              }))
-            }
+            onChange={handleFilterChange}
           >
             <option value={SORT_OPTIONS.PRICE_LOW_TO_HIGH}>가격 낮은순</option>
             <option value={SORT_OPTIONS.PRICE_HIGH_TO_LOW}>가격 높은순</option>
@@ -118,7 +122,7 @@ const ProductsList = () => {
                 <p>상품 설명 : {product.description}</p>
                 <img
                   src={product.image}
-                  alt="상품 사진"
+                  alt={product.title}
                   className={styles.image}
                 />
                 <p>

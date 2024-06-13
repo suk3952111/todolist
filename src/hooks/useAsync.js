@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export const useAsync = (asyncFunction, immediate = true) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const execute = async () => {

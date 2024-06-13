@@ -12,12 +12,10 @@ const useCart = (productDetail, user, updateUser, toggleModal) => {
   const updateCart = (cartItemToAdd) => {
     const userData = JSON.parse(localStorage.getItem("user")) || {};
     const cart = userData.cart || [];
-    const existingItemIndex = cart.findIndex(
-      (item) => item.id === cartItemToAdd.id
-    );
+    const existingCartItem = cart.find((item) => item.id === cartItemToAdd.id);
 
-    if (existingItemIndex !== -1) {
-      cart[existingItemIndex].number = cartItemToAdd.number;
+    if (existingCartItem) {
+      existingCartItem.number = cartItemToAdd.number;
     } else {
       cart.push(cartItemToAdd);
     }
