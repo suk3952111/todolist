@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa6";
 import { useAsync } from "@/hooks/useAsync";
 import { fetchProducts, fetchCategories } from "@/api/api";
 import { sortProducts } from "@/hooks/util";
-import "./ProductsList.css";
+import styles from "./ProductsList.module.css";
 import { Link } from "react-router-dom";
 
 const SORT_OPTIONS = {

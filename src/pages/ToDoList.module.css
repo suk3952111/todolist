@@ -16,7 +16,7 @@
   padding: 0;
 }
 
-.list-item {
+.listItem {
   width: 100%;
   display: flex;
   justify-content: space-between;

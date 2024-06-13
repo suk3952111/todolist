@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 
-function Layout({ user, handleLogout }) {
+function Layout() {
   return (
     <>
-      <Header user={user} handleLogout={handleLogout} />
+      <Header />
       <Outlet />
     </>
   );
