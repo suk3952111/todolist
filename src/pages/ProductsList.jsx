@@ -118,8 +118,8 @@ const ProductsList = () => {
                 <p>상품 설명 : {product.description}</p>
                 <img
                   src={product.image}
-                  alt="상품 사진"
-                  className="product-image"
+                  alt={product.title}
+                  className={styles.image}
                 />
                 <p>
                   <FaStar /> {product.rating.rate} (리뷰 수:
