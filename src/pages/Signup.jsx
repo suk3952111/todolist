@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useToggle from "../hooks/useToggle";
-import "./Signup.css";
+import styles from "./Signup.module.css";
 
 const Signup = () => {
   const {
@@ -47,7 +47,9 @@ const Signup = () => {
               },
             })}
           />
-          {errors.email && <p className="error">{errors.email.message}</p>}
+          {errors.email && (
+            <p className={styles.error}>{errors.email.message}</p>
+          )}
         </div>
         <div>
           <label>비밀번호:</label>
@@ -64,7 +66,7 @@ const Signup = () => {
             />
           </div>
           {errors.password && (
-            <p className="error">{errors.password.message}</p>
+            <p className={styles.error}>{errors.password.message}</p>
           )}
         </div>
         <div>
@@ -83,10 +85,10 @@ const Signup = () => {
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="error">{errors.confirmPassword.message}</p>
+            <p className={styles.error}>{errors.confirmPassword.message}</p>
           )}
         </div>
-        {signupError && <p className="error">{signupError}</p>}
+        {signupError && <p className={styles.error}>{signupError}</p>}
         <button type="submit">가입</button>
       </form>
     </div>

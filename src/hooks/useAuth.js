@@ -20,7 +20,12 @@ const useAuth = () => {
     localStorage.removeItem("user");
   };
 
-  return { user, handleLogin, handleLogout };
+  const updateUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  return { user, handleLogin, handleLogout, updateUser };
 };
 
 export default useAuth;
